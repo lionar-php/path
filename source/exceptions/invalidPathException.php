@@ -1,10 +1,10 @@
 <?php
 
-namespace Path\Exceptions;
+namespace path\exceptions;
 
-use InvalidArgumentException;
+use InvalidArgumentException as invalidArgumentException;
 
-class InvalidPathException extends InvalidArgumentException
+class invalidPathException extends invalidArgumentException
 {
 	public function __construct ( string $path )
 	{
