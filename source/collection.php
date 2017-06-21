@@ -33,21 +33,10 @@ class collection
 
 	public function to ( string $pathname ) : string
 	{
-		if ( empty ( $file = pathinfo ( $pathname, PATHINFO_EXTENSION ) ) )
-			return $this->form ( $pathname );	
-		
-		$file = basename ( $pathname );
-		$pathname = dirname ( $pathname );
-
-		return $this->form ( $pathname, $file );
-	}
-
-	private function form ( string $pathname, string $file = '' )
-	{
 		if ( $this->has ( $pathname ) )
-			return rtrim ( $this->paths [ $pathname ] . $file, '/' );
+			return $this->paths [ $pathname ];
 		if ( $this->canAutoResolve ( $pathname ) )
-			return rtrim ( $this->compose ( $pathname ) . $file, '/' );
+			return $this->compose ( $pathname );
 
 		throw new missingPathException ( $pathname );
 	}
@@ -59,15 +48,6 @@ class collection
 
 	private function compose ( string $path ) : string
 	{
-		$path = $this->correct ( $path );
-		return $this->root . $path;
-	}
-
-	private function correct ( string $path )
-	{
-		if ( $path === '.' or $path === '/' )
-			return '';
-		else
-			return rtrim ( $path, '/' );
+		return $this->root . rtrim ( $path, '/' );
 	}
 }
